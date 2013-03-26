@@ -10,7 +10,7 @@ Include this plugin after including the svg.js library in your html document.
 Then fire up the clock:
 
 ```javascript
-var draw = svg('canvas').size(400, 400)
+var draw = SVG('canvas').size(400, 400)
 var clock = draw.clock('100%')
 ```
 

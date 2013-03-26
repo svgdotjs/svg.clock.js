@@ -117,7 +117,7 @@ SVG.extend(SVG.Clock, {
     
     /* ensure duration */
     if (duration == null)
-      duration = 200
+      duration = 300
     
     /* set all pointers */
     this
