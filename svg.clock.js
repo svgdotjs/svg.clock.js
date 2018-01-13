@@ -117,13 +117,13 @@ SVG.extend(SVG.Clock, {
     
     /* ensure duration */
     if (duration == null)
-      duration = 300
+      duration = 1000
     
     /* set all pointers */
     this
       .setHours(time.getHours(), time.getMinutes())
       .setMinutes(time.getMinutes(), duration)
-      .setSeconds(time.getSeconds(), duration)
+      .setSeconds(time.getSeconds(), duration, true)
     
     return this
   }
@@ -165,21 +165,24 @@ SVG.extend(SVG.Clock, {
     return this
   }
   // Set second
-, setSeconds: function(seconds, duration) {
+, setSeconds: function(seconds, duration, pause) {
     /* store seconds */
     this.time.seconds = seconds
     
-    /* register a full circle */
-    if (seconds == 0)
+    if (pause && seconds>=59) {
       this.full.seconds++
-    
+      seconds = 0
+    } else if (pause) {
+      seconds = this.time.seconds * (60/58.0)
+    }
+
     /* calculate rotation */
     var deg = this.full.seconds * 360 + 360 / 60 * seconds
     
     /* animate if duration is given */
     if (duration)
       this.seconds
-        .animate(duration, SVG.easing.elastic)
+        .animate(duration, this.linear)
         .rotate(deg, 50, 50)
     else
       this.seconds
@@ -187,6 +190,7 @@ SVG.extend(SVG.Clock, {
     
     return this
   }
+, linear: function(pos) { return pos }
   
 })
 
